@@ -1,6 +1,6 @@
 # basic MCSTORM on github
 
-name: FlyProxy-MCSTORM
+name: FlyProxy-Ping
 
 # Controls when the workflow will run
 on:
@@ -14,15 +14,20 @@ on:
   workflow_dispatch:
     inputs:
       server_ip_value:
-        description: 'IP of server FlyProxy-MCSTORM.'
+        description: 'IP of server FlyProxy-Ping.'
         required: true
         default: 'IP'
         type: string
       server_port_value:
-        description: 'PORT of FlyProxy-MCSTORM.'
+        description: 'PORT of FlyProxy-Ping.'
         required: true
         default: 'PORT'
         type: string
+      server_time_value:
+        description: 'Time of FlyProxy-Ping.'
+        required: true
+        default: '120'
+        type: string        
 
 jobs:
   build:
@@ -30,9 +35,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Run FlyPingawith github actions. ggs if server doesnt have bungee lol:)
+      - name: Run FlyPinga with github actions. ggs if server doesnt have bungee lol:)
         run: |
-          timeout 60s java -jar FlyPing.jar host-${{ github.event.inputs.server_ip_value }} port-${{ github.event.inputs.server_port_value }} threads-1000
+          timeout ${{ github.event.inputs.server_time_value }}s java -jar FlyPing.jar host-${{ github.event.inputs.server_ip_value }} port-${{ github.event.inputs.server_port_value }} threads-1000
     env:
       server_ip: ${{ github.event.inputs.server_ip_value }}
       server_port: ${{ github.event.inputs.server_port_value }}
+      server_time: ${{ github.event.inputs.server_time_value }}
